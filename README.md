@@ -21,7 +21,6 @@ Vladimir/
 ├── index.html          # Main landing page
 ├── Pages/
 │   ├── Testing.html    # Discord profile page
-│   ├── Links.html      # Social links page
 │   └── Portfolio.html  # Detailed portfolio page
 ├── vercel.json         # Vercel configuration
 └── README.md          # This file
