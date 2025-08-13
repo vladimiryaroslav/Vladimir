@@ -491,7 +491,7 @@
             height: 100%;
             background: linear-gradient(90deg, var(--accent), var(--success));
             border-radius: 3px;
-            transition: width 0.3s ease;
+            transition: width 0.5s ease-out;
             box-shadow: 0 0 8px rgba(88, 101, 242, 0.5);
             animation: progressPulse 2s ease-in-out infinite;
         }
@@ -1020,9 +1020,135 @@
         createParticles();
         setupBackgroundMusic();
         fetchUserData();
-        fetchWeather();
 
-        // Update every 5 seconds
+        // Store current Spotify activity data globally
+        let currentSpotifyActivity = null;
+        let progressUpdateInterval = null;
+
+        // Function to update progress bar without visual refresh
+        function updateProgressBar() {
+            if (!currentSpotifyActivity) return;
+            
+            const start = currentSpotifyActivity.timestamps?.start;
+            const end = currentSpotifyActivity.timestamps?.end;
+            
+            if (start && end) {
+                const duration = end - start;
+                const elapsed = Date.now() - start;
+                const progressPercent = Math.min((elapsed / duration) * 100, 100);
+                
+                // Update progress bar smoothly
+                const progressFill = document.querySelector('.progress-fill');
+                const elapsedTime = document.querySelector('.progress-time span:first-child');
+                const totalTime = document.querySelector('.progress-time span:last-child');
+                
+                if (progressFill) {
+                    progressFill.style.width = `${progressPercent}%`;
+                }
+                
+                if (elapsedTime) {
+                    elapsedTime.textContent = formatTime(elapsed);
+                }
+                
+                if (totalTime) {
+                    totalTime.textContent = formatTime(duration);
+                }
+            }
+        }
+
+        // Modified updateActivity function to store Spotify data
+        function updateActivity(data) {
+            const activities = data.activities || [];
+            const spotifyActivity = activities.find(a => a.type === 2 && a.name === 'Spotify');
+            const customStatusActivity = activities.find(a => a.type === 4);
+
+            // Clear existing progress update interval
+            if (progressUpdateInterval) {
+                clearInterval(progressUpdateInterval);
+                progressUpdateInterval = null;
+            }
+
+            if (spotifyActivity) {
+                // Store current Spotify activity for progress updates
+                currentSpotifyActivity = spotifyActivity;
+                
+                const trackId = spotifyActivity.sync_id;
+                const song = spotifyActivity.details || 'Unknown Track';
+                const artist = spotifyActivity.state || 'Unknown Artist';
+                const albumArt = spotifyActivity.assets?.large_image?.replace('spotify:', 'https://i.scdn.co/image/') || 'https://via.placeholder.com/80x80/1db954/ffffff?text=🎵';
+                const spotifyUrl = `https://open.spotify.com/track/${trackId}`;
+
+                const start = spotifyActivity.timestamps?.start;
+                const end = spotifyActivity.timestamps?.end;
+                
+                let progressHTML = '';
+                if (start && end) {
+                    const duration = end - start;
+                    const elapsed = Date.now() - start;
+                    const progressPercent = Math.min((elapsed / duration) * 100, 100);
+
+                    progressHTML = `
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            <div class="progress-time">
+                                <span>${formatTime(elapsed)}</span>
+                                <span>${formatTime(duration)}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                activityCard.innerHTML = `
+                    <div class="activity-header">
+                        <div class="activity-icon">🎵</div>
+                        <div class="activity-title">Listening to Spotify</div>
+                    </div>
+                    <div class="spotify-content">
+                        <div class="album-art" style="background-image: url('${albumArt}')" onclick="window.open('${spotifyUrl}', '_blank')"></div>
+                        <div class="track-info">
+                            <div class="track-name">${song}</div>
+                            <div class="track-artist">${artist}</div>
+                            ${progressHTML}
+                            <div class="spotify-link">
+                                <a href="${spotifyUrl}" target="_blank" rel="noopener noreferrer">Open in Spotify →</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Start progress update interval
+                progressUpdateInterval = setInterval(updateProgressBar, 1000);
+            } else {
+                // Clear current Spotify activity
+                currentSpotifyActivity = null;
+                
+                if (customStatusActivity && customStatusActivity.state) {
+                    activityCard.innerHTML = `
+                        <div class="activity-header">
+                            <div class="activity-icon">💬</div>
+                            <div class="activity-title">Custom Status</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem;">
+                            <div style="font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.5rem;">
+                                "${customStatusActivity.state}"
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    activityCard.innerHTML = `
+                        <div class="no-activity">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">🎮</div>
+                            <div>No current activity</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">Check back later!</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Update every 5 seconds for new data, but progress bar updates every second
         setInterval(fetchUserData, 1000);
 
         // Add interactive effects
