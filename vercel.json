@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/testing",
-      "destination": "/Pages/Testing.html"
+      "source": "/activity",
+      "destination": "/Pages/Activity.html"
     },
     {
       "source": "/portfolio",
