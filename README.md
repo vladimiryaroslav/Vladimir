@@ -20,7 +20,7 @@ Visit the live site: [vladweb.xyz](https://vladweb.xyz)
 Vladimir/
 ├── index.html          # Main landing page
 ├── Pages/
-│   ├── Testing.html    # Discord profile page
+│   ├── Activity.html    # Discord profile page
 │   └── Portfolio.html  # Detailed portfolio page
 ├── vercel.json         # Vercel configuration
 └── README.md          # This file
@@ -50,12 +50,7 @@ Vladimir/
 - Skills breakdown
 - Professional background
 
-### Links (`/links`)
-- Social media links
-- Quick navigation
-- Contact information
-
-### Discord Profile (`/testing`)
+### Discord Profile (`/activity`)
 - Live Discord status
 - Spotify integration
 - Platform activity
@@ -74,8 +69,7 @@ Vladimir/
 The site uses clean URLs thanks to `vercel.json`:
 - `vladweb.xyz` - Main site
 - `vladweb.xyz/portfolio` - Portfolio page
-- `vladweb.xyz/links` - Links page
-- `vladweb.xyz/testing` - Discord profile
+- `vladweb.xyz/activity` - Discord profile
 
 ## 🎨 Customization
 
@@ -92,7 +86,7 @@ Update the CSS variables in the `:root` selector:
 ```
 
 ### Discord Integration
-Update the Discord user ID in the JavaScript:
+Update the Discord user ID in the JavaScript (must be in the Lanyard Discord Server);
 ```javascript
 const LANYARD_API = "https://api.lanyard.rest/v1/users/YOUR_DISCORD_ID";
 ```
