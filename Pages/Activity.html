@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/home/vlad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #888888;
+            font-weight: 400;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .status-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.5rem;
+        }
+
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .status-info h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .status-info p {
+            font-size: 0.8rem;
+            color: #888888;
+        }
+
+        .status-right {
+            text-align: right;
+        }
+
+        .status-time {
+            font-size: 0.75rem;
+            color: #666666;
+        }
+
+        .game-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.5rem;
+        }
+
+        .game-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .game-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .game-info h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .game-info p {
+            font-size: 0.8rem;
+            color: #888888;
+        }
+
+        .game-duration {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: #666666;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .activity-item::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 1.25rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: #666666;
+            min-width: 50px;
+        }
+
+        .activity-content h4 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-content p {
+            font-size: 0.75rem;
+            color: #888888;
+        }
+
+        .no-activity {
+            text-align: center;
+            padding: 2rem;
+            color: #666666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .status-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">/home/vlad</h1>
+            <p class="subtitle">Vladimir's discord status and activity</p>
+        </header>
+
+        <div class="status-card">
+            <div class="card-title">Status</div>
+            <div class="status-item">
+                <div class="status-left">
+                    <div class="status-avatar">👤</div>
+                    <div class="status-info">
+                        <h4>Current Status</h4>
+                        <p id="discordStatus">Loading...</p>
+                    </div>
+                </div>
+                <div class="status-right">
+                    <div class="status-time" id="statusTime">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="card-title">Gaming</div>
+            <div id="gamingActivity">
+                <div class="game-item">
+                    <div class="game-icon">🎮</div>
+                    <div class="game-info">
+                        <h4>No Game Detected</h4>
+                        <p>Not currently playing</p>
+                    </div>
+                    <div class="game-duration">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="card-title">Activities</div>
+            <div id="activitiesList">
+                <div class="no-activity">No activities detected</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DISCORD_ID = "1381370596335812699";
+        const LANYARD_API = `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
+
+        function updateStatus(data) {
+            const statusElement = document.getElementById('discordStatus');
+            const timeElement = document.getElementById('statusTime');
+            
+            if (data && data.data) {
+                const user = data.data;
+                const status = user.discord_status || 'offline';
+                const activities = user.activities || [];
+                
+                let statusText = status.charAt(0).toUpperCase() + status.slice(1);
+                if (activities.length > 0) {
+                    const game = activities.find(activity => activity.type === 0);
+                    if (game) {
+                        statusText += ` - Playing ${game.name}`;
+                    }
+                }
+                
+                statusElement.textContent = statusText;
+                timeElement.textContent = new Date().toLocaleTimeString();
+                
+                updateGaming(activities);
+                updateActivities(activities);
+            } else {
+                statusElement.textContent = 'Offline';
+                timeElement.textContent = '--';
+            }
+        }
+
+        function updateGaming(activities) {
+            const container = document.getElementById('gamingActivity');
+            
+            if (activities.length === 0) {
+                container.innerHTML = `
+                    <div class="game-item">
+                        <div class="game-icon">🎮</div>
+                        <div class="game-info">
+                            <h4>No Game Detected</h4>
+                            <p>Not currently playing</p>
+                        </div>
+                        <div class="game-duration">--</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const game = activities.find(activity => activity.type === 0);
+            if (game) {
+                const startTime = game.timestamps?.start;
+                let duration = '--';
+                
+                if (startTime) {
+                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                    const hours = Math.floor(elapsed / 3600);
+                    const minutes = Math.floor((elapsed % 3600) / 60);
+                    
+                    if (hours > 0) {
+                        duration = `${hours}h ${minutes}m`;
+                    } else {
+                        duration = `${minutes}m`;
+                    }
+                }
+                
+                container.innerHTML = `
+                    <div class="game-item">
+                        <div class="game-icon">🎮</div>
+                        <div class="game-info">
+                            <h4>${game.name}</h4>
+                            <p>${game.details || 'Playing'}</p>
+                        </div>
+                        <div class="game-duration">${duration}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateActivities(activities) {
+            const container = document.getElementById('activitiesList');
+            
+            if (activities.length === 0) {
+                container.innerHTML = '<div class="no-activity">No activities detected</div>';
+                return;
+            }
+            
+            let activitiesHTML = '';
+            activities.forEach(activity => {
+                let icon = '📱';
+                let title = activity.name || 'Unknown';
+                let details = '';
+                
+                switch(activity.type) {
+                    case 0: // Playing
+                        icon = '🎮';
+                        details = activity.details || 'Playing';
+                        break;
+                    case 1: // Streaming
+                        icon = '📺';
+                        details = `Streaming ${activity.details || ''}`;
+                        break;
+                    case 2: // Listening
+                        icon = '🎵';
+                        details = `${activity.details || ''} by ${activity.state || ''}`;
+                        break;
+                    case 3: // Watching
+                        icon = '👀';
+                        details = activity.details || 'Watching';
+                        break;
+                    case 4: // Custom
+                        icon = '💬';
+                        details = activity.state || 'Custom status';
+                        break;
+                    case 5: // Competing
+                        icon = '🏆';
+                        details = activity.details || 'Competing';
+                        break;
+                }
+                
+                activitiesHTML += `
+                    <div class="activity-item">
+                        <div class="activity-time">${new Date().toLocaleTimeString()}</div>
+                        <div class="activity-content">
+                            <h4>${title}</h4>
+                            <p>${details}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = activitiesHTML;
+        }
+
+        async function fetchData() {
+            try {
+                const response = await fetch(LANYARD_API);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateStatus(data);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Update every second
+        setInterval(fetchData, 1000);
+        
+        // Initial fetch
+        fetchData();
+    </script>
+</body>
+</html>
