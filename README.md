@@ -18,11 +18,11 @@ Visit the live site: [vladweb.xyz](https://vladweb.xyz)
 
 ```
 Vladimir/
+├── 404.html       # Interactive 404 error page
 ├── index.html          # Main landing page
 ├── Pages/
 │   ├── Activity.html    # Discord profile page
-│   ├── Portfolio.html  # Detailed portfolio page
-│   └── 404.html       # Interactive 404 error page
+│   └──  Portfolio.html  # Detailed portfolio page
 ├── vercel.json         # Vercel configuration
 └── README.md          # This file
 ```
@@ -136,3 +136,4 @@ Feel free to fork this project and customize it for your own portfolio!
 ---
 
 **Built with ❤️ by Vladimir**
+
