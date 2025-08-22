@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>/home/vlad</title>
+    <title>Discord Activity | Vladimir</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,204 +14,465 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text: #ffffff;
+            --text-secondary: #94a3b8;
+            --background: #0f0f23;
+            --card-bg: rgba(30, 30, 60, 0.8);
+            --card-border: rgba(139, 92, 246, 0.3);
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000000;
-            color: #ffffff;
+            background: var(--background);
+            color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            padding: 2rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Dense Star Field */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        /* Generate 100+ stars with different sizes and positions */
+        .star:nth-child(1) { width: 1px; height: 1px; top: 5%; left: 10%; animation-delay: 0s; }
+        .star:nth-child(2) { width: 2px; height: 2px; top: 8%; left: 25%; animation-delay: 0.3s; }
+        .star:nth-child(3) { width: 1px; height: 1px; top: 12%; left: 40%; animation-delay: 0.6s; }
+        .star:nth-child(4) { width: 3px; height: 3px; top: 15%; left: 60%; animation-delay: 0.9s; }
+        .star:nth-child(5) { width: 1px; height: 1px; top: 18%; left: 80%; animation-delay: 1.2s; }
+        .star:nth-child(6) { width: 2px; height: 2px; top: 22%; left: 15%; animation-delay: 1.5s; }
+        .star:nth-child(7) { width: 1px; height: 1px; top: 28%; left: 35%; animation-delay: 1.8s; }
+        .star:nth-child(8) { width: 3px; height: 3px; top: 32%; left: 55%; animation-delay: 2.1s; }
+        .star:nth-child(9) { width: 2px; height: 2px; top: 38%; left: 75%; animation-delay: 2.4s; }
+        .star:nth-child(10) { width: 1px; height: 1px; top: 42%; left: 20%; animation-delay: 2.7s; }
+        .star:nth-child(11) { width: 2px; height: 2px; top: 48%; left: 45%; animation-delay: 3s; }
+        .star:nth-child(12) { width: 1px; height: 1px; top: 52%; left: 65%; animation-delay: 3.3s; }
+        .star:nth-child(13) { width: 3px; height: 3px; top: 58%; left: 85%; animation-delay: 3.6s; }
+        .star:nth-child(14) { width: 1px; height: 1px; top: 62%; left: 30%; animation-delay: 3.9s; }
+        .star:nth-child(15) { width: 2px; height: 2px; top: 68%; left: 50%; animation-delay: 4.2s; }
+        .star:nth-child(16) { width: 1px; height: 1px; top: 72%; left: 70%; animation-delay: 4.5s; }
+        .star:nth-child(17) { width: 3px; height: 3px; top: 78%; left: 90%; animation-delay: 4.8s; }
+        .star:nth-child(18) { width: 2px; height: 2px; top: 82%; left: 25%; animation-delay: 5.1s; }
+        .star:nth-child(19) { width: 1px; height: 1px; top: 88%; left: 55%; animation-delay: 5.4s; }
+        .star:nth-child(20) { width: 2px; height: 2px; top: 92%; left: 75%; animation-delay: 5.7s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* Shooting Stars */
+        .shooting-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(45deg, white, transparent);
+            border-radius: 50%;
+            animation: shooting 6s linear infinite;
+            opacity: 0;
+        }
+
+        .shooting-star:nth-child(1) { top: 0; left: 0; animation-delay: 0s; }
+        .shooting-star:nth-child(2) { top: 0; left: 100%; animation-delay: 2s; }
+        .shooting-star:nth-child(3) { top: 50%; left: 0; animation-delay: 4s; }
+        .shooting-star:nth-child(4) { top: 100%; left: 50%; animation-delay: 6s; }
+
+        @keyframes shooting {
+            0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 1; }
+            100% { transform: translateX(300px) translateY(300px) rotate(45deg); opacity: 0; }
         }
 
         .container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out;
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 900;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -0.02em;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
         }
 
         .subtitle {
-            font-size: 1rem;
-            color: #888888;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
             font-weight: 400;
         }
 
-        .status-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
-        .status-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.12);
+        .main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .main-card:hover::before {
+            left: 100%;
+        }
+
+        .main-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
 
         .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
         }
 
-        .status-item {
+        .card-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Discord Status */
+        .discord-status {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 0.5rem;
-        }
-
-        .status-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .status-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            margin-bottom: 1.5rem;
         }
 
         .status-avatar {
-            width: 32px;
-            height: 32px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
+            border: 4px solid var(--primary);
+            object-fit: cover;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
 
         .status-info h4 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #ffffff;
-            margin-bottom: 0.25rem;
-        }
-
-        .status-info p {
-            font-size: 0.8rem;
-            color: #888888;
-        }
-
-        .status-right {
-            text-align: right;
-        }
-
-        .status-time {
-            font-size: 0.75rem;
-            color: #666666;
-        }
-
-        .game-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
             margin-bottom: 0.5rem;
         }
 
-        .game-item:last-child {
-            margin-bottom: 0;
+        .status-info p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-online { background: var(--success); color: white; }
+        .status-idle { background: var(--warning); color: white; }
+        .status-dnd { background: var(--danger); color: white; }
+        .status-offline { background: var(--text-secondary); color: white; }
+
+        /* Game Activity */
+        .game-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .game-item:hover {
+            background: rgba(139, 92, 246, 0.15);
+            transform: translateX(8px);
         }
 
         .game-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent), #f97316);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+            object-fit: cover;
         }
 
         .game-info h4 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #ffffff;
-            margin-bottom: 0.25rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
         }
 
         .game-info p {
-            font-size: 0.8rem;
-            color: #888888;
+            font-size: 1rem;
+            color: var(--text-secondary);
         }
 
         .game-duration {
             margin-left: auto;
-            font-size: 0.75rem;
-            color: #666666;
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 600;
+            background: rgba(139, 92, 246, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
         }
 
+        /* Spotify */
+        .spotify-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .spotify-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1db954, #1ed760);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3);
+            object-fit: cover;
+        }
+
+        .spotify-info h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .spotify-info p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .spotify-progress {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .progress-bar {
+            width: 120px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1db954, #1ed760);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-time {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Activities Timeline */
         .activity-item {
             display: flex;
             align-items: flex-start;
             gap: 1rem;
-            padding: 0.75rem 0;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            padding-left: 1.5rem;
+            padding: 1.5rem 0;
+            border-left: 3px solid var(--primary);
+            padding-left: 2rem;
             position: relative;
+            margin-bottom: 1.5rem;
         }
 
         .activity-item::before {
             content: '';
             position: absolute;
-            left: -4px;
-            top: 1.25rem;
-            width: 8px;
-            height: 8px;
+            left: -8px;
+            top: 1.5rem;
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: var(--primary);
+            border: 3px solid var(--background);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
         }
 
-        .activity-time {
-            font-size: 0.75rem;
-            color: #666666;
-            min-width: 50px;
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(139, 92, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            object-fit: cover;
         }
 
         .activity-content h4 {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #ffffff;
-            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
         }
 
         .activity-content p {
-            font-size: 0.75rem;
-            color: #888888;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-left: auto;
+            min-width: 80px;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            text-align: center;
         }
 
         .no-activity {
             text-align: center;
-            padding: 2rem;
-            color: #666666;
-            font-size: 0.9rem;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            body {
+            .container {
                 padding: 1rem;
             }
             
@@ -219,91 +480,180 @@
                 font-size: 2.5rem;
             }
             
-            .status-card {
-                padding: 1rem;
+            .main-card {
+                padding: 1.5rem;
+            }
+            
+            .discord-status {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Dense Star Field -->
+    <div class="starfield">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+
     <div class="container">
         <header class="header">
-            <h1 class="title">/home/vlad</h1>
-            <p class="subtitle">Vladimir's discord status and activity</p>
+            <h1 class="title">Discord Activity</h1>
+            <p class="subtitle">Real-time status and activity monitoring</p>
         </header>
 
-        <div class="status-card">
-            <div class="card-title">Status</div>
-            <div class="status-item">
-                <div class="status-left">
-                    <div class="status-avatar">👤</div>
+        <div class="dashboard">
+            <!-- Left Column -->
+            <div class="main-card">
+                <div class="card-header">
+                    <div class="card-icon">🎮</div>
+                    <div>
+                        <div class="card-title">Discord Status</div>
+                        <div class="card-subtitle">Current user status and information</div>
+                    </div>
+                </div>
+                
+                <div class="discord-status" id="discordStatus">
+                    <img class="status-avatar" id="userAvatar" src="" alt="User Avatar">
                     <div class="status-info">
-                        <h4>Current Status</h4>
-                        <p id="discordStatus">Loading...</p>
+                        <h4 id="userName">Loading...</h4>
+                        <p id="userStatus">Connecting to Discord...</p>
+                        <div class="status-badge" id="statusBadge">--</div>
                     </div>
                 </div>
-                <div class="status-right">
-                    <div class="status-time" id="statusTime">--</div>
-                </div>
             </div>
-        </div>
 
-        <div class="status-card">
-            <div class="card-title">Gaming</div>
-            <div id="gamingActivity">
-                <div class="game-item">
-                    <div class="game-icon">🎮</div>
-                    <div class="game-info">
-                        <h4>No Game Detected</h4>
-                        <p>Not currently playing</p>
+            <!-- Right Column -->
+            <div class="main-card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <div>
+                        <div class="card-title">Gaming Activity</div>
+                        <div class="card-subtitle">Currently playing and game details</div>
                     </div>
-                    <div class="game-duration">--</div>
+                </div>
+                
+                <div id="gameActivity">
+                    <div class="game-item">
+                        <div class="game-icon">🎮</div>
+                        <div class="game-info">
+                            <h4>No Game Detected</h4>
+                            <p>Not currently playing any games</p>
+                        </div>
+                        <div class="game-duration">--</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="status-card">
-            <div class="card-title">Activities</div>
-            <div id="activitiesList">
-                <div class="no-activity">No activities detected</div>
+            <!-- Full Width Cards -->
+            <div class="main-card" style="grid-column: 1 / -1;">
+                <div class="card-header">
+                    <div class="card-icon">🎵</div>
+                    <div>
+                        <div class="card-title">Music Activity</div>
+                        <div class="card-subtitle">Spotify and music listening</div>
+                    </div>
+                </div>
+                
+                <div id="spotifyActivity">
+                    <div class="spotify-item">
+                        <div class="spotify-icon">🎵</div>
+                        <div class="spotify-info">
+                            <h4>Not Listening</h4>
+                            <p>No music currently playing</p>
+                        </div>
+                        <div class="spotify-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-time">--:-- / --:--</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
     <script>
         const DISCORD_ID = "1381370596335812699";
         const LANYARD_API = `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
 
-        function updateStatus(data) {
-            const statusElement = document.getElementById('discordStatus');
-            const timeElement = document.getElementById('statusTime');
-            
-            if (data && data.data) {
-                const user = data.data;
-                const status = user.discord_status || 'offline';
-                const activities = user.activities || [];
-                
-                let statusText = status.charAt(0).toUpperCase() + status.slice(1);
-                if (activities.length > 0) {
-                    const game = activities.find(activity => activity.type === 0);
-                    if (game) {
-                        statusText += ` - Playing ${game.name}`;
-                    }
-                }
-                
-                statusElement.textContent = statusText;
-                timeElement.textContent = new Date().toLocaleTimeString();
-                
-                updateGaming(activities);
-                updateActivities(activities);
-            } else {
-                statusElement.textContent = 'Offline';
-                timeElement.textContent = '--';
+        function formatTime(ms) {
+            const min = Math.floor(ms / 60000);
+            const sec = Math.floor((ms % 60000) / 1000);
+            return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'online': return 'status-online';
+                case 'idle': return 'status-idle';
+                case 'dnd': return 'status-dnd';
+                default: return 'status-offline';
             }
         }
 
-        function updateGaming(activities) {
-            const container = document.getElementById('gamingActivity');
+        function getStatusText(status) {
+            switch(status) {
+                case 'online': return 'ONLINE';
+                case 'idle': return 'IDLE';
+                case 'dnd': return 'DO NOT DISTURB';
+                default: return 'OFFLINE';
+            }
+        }
+
+        function updateDiscordStatus(data) {
+            if (data && data.data) {
+                const user = data.data;
+                const username = user.discord_user.username;
+                const globalName = user.discord_user.global_name || username;
+                const avatarHash = user.discord_user.avatar;
+                const status = user.discord_status || 'offline';
+                const activities = user.activities || [];
+                
+                if (avatarHash) {
+                    const avatarUrl = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${avatarHash}.png?size=256`;
+                    document.getElementById('userAvatar').src = avatarUrl;
+                }
+                
+                document.getElementById('userName').textContent = globalName;
+                document.getElementById('userStatus').textContent = `@${username}`;
+                
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.className = `status-badge ${getStatusColor(status)}`;
+                statusBadge.textContent = getStatusText(status);
+                
+                updateGameActivity(activities);
+                updateSpotifyActivity(user);
+                updateActivitiesTimeline(activities);
+            }
+        }
+
+        function updateGameActivity(activities) {
+            const container = document.getElementById('gameActivity');
             
             if (activities.length === 0) {
                 container.innerHTML = `
@@ -311,7 +661,7 @@
                         <div class="game-icon">🎮</div>
                         <div class="game-info">
                             <h4>No Game Detected</h4>
-                            <p>Not currently playing</p>
+                            <p>Not currently playing any games</p>
                         </div>
                         <div class="game-duration">--</div>
                     </div>
@@ -336,9 +686,17 @@
                     }
                 }
                 
+                // Get game artwork if available
+                const gameArt = game.assets?.large_image || game.assets?.small_image;
+                const gameIcon = gameArt ? 
+                    `<img src="https://cdn.discordapp.com/app-assets/${game.application_id}/${gameArt}.png" alt="${game.name}" style="width: 100%; height: 100%; border-radius: 16px; object-fit: cover;">` : 
+                    '🎮';
+                
                 container.innerHTML = `
                     <div class="game-item">
-                        <div class="game-icon">🎮</div>
+                        <div class="game-icon">
+                            ${gameIcon}
+                        </div>
                         <div class="game-info">
                             <h4>${game.name}</h4>
                             <p>${game.details || 'Playing'}</p>
@@ -349,54 +707,135 @@
             }
         }
 
-        function updateActivities(activities) {
-            const container = document.getElementById('activitiesList');
+        function updateSpotifyActivity(user) {
+            const container = document.getElementById('spotifyActivity');
+            
+            if (user.spotify && user.listening_to_spotify) {
+                const spotify = user.spotify;
+                const { song, artist, album_art_url, timestamps } = spotify;
+                
+                const duration = timestamps.end - timestamps.start;
+                const totalTime = formatTime(duration);
+                
+                // Use album art if available, otherwise fallback to icon
+                const spotifyIcon = album_art_url ? 
+                    `<img src="${album_art_url}" alt="${song}" style="width: 100%; height: 100%; border-radius: 16px; object-fit: cover;">` : 
+                    '🎵';
+                
+                container.innerHTML = `
+                    <div class="spotify-item">
+                        <div class="spotify-icon">
+                            ${spotifyIcon}
+                        </div>
+                        <div class="spotify-info">
+                            <h4>${song}</h4>
+                            <p>${artist}</p>
+                        </div>
+                        <div class="spotify-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="spotifyProgress" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-time" id="spotifyTime">00:00 / ${totalTime}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Clear any existing intervals to prevent glitching
+                if (window.spotifyProgressInterval) {
+                    clearInterval(window.spotifyProgressInterval);
+                }
+                
+                function updateSpotifyProgress() {
+                    const now = Date.now();
+                    const elapsed = now - timestamps.start;
+                    const percent = Math.min(100, (elapsed / duration) * 100);
+                    const elapsedTime = formatTime(elapsed);
+                    
+                    const progressBar = document.getElementById('spotifyProgress');
+                    const timeDisplay = document.getElementById('spotifyTime');
+                    
+                    if (progressBar && timeDisplay) {
+                        progressBar.style.width = percent + '%';
+                        timeDisplay.textContent = `${elapsedTime} / ${totalTime}`;
+                    }
+                }
+                
+                updateSpotifyProgress();
+                window.spotifyProgressInterval = setInterval(updateSpotifyProgress, 1000);
+            } else {
+                container.innerHTML = `
+                    <div class="spotify-item">
+                        <div class="spotify-icon">🎵</div>
+                        <div class="spotify-info">
+                            <h4>Not Listening</h4>
+                            <p>No music currently playing</p>
+                        </div>
+                        <div class="spotify-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-time">--:-- / --:--</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Clear interval when not listening
+                if (window.spotifyProgressInterval) {
+                    clearInterval(window.spotifyProgressInterval);
+                }
+            }
+        }
+
+        function updateActivitiesTimeline(activities) {
+            const container = document.getElementById('activitiesTimeline');
             
             if (activities.length === 0) {
                 container.innerHTML = '<div class="no-activity">No activities detected</div>';
                 return;
             }
             
+            // Filter out Spotify activities since we have a dedicated section for them
+            const filteredActivities = activities.filter(activity => 
+                activity.type !== 2 && // Remove listening activities (Spotify)
+                activity.name !== 'Spotify' // Remove any Spotify named activities
+            );
+            
+            if (filteredActivities.length === 0) {
+                container.innerHTML = '<div class="no-activity">No other activities detected</div>';
+                return;
+            }
+            
             let activitiesHTML = '';
-            activities.forEach(activity => {
+            filteredActivities.forEach(activity => {
                 let icon = '📱';
                 let title = activity.name || 'Unknown';
                 let details = '';
                 
                 switch(activity.type) {
-                    case 0: // Playing
-                        icon = '🎮';
-                        details = activity.details || 'Playing';
-                        break;
-                    case 1: // Streaming
-                        icon = '📺';
-                        details = `Streaming ${activity.details || ''}`;
-                        break;
-                    case 2: // Listening
-                        icon = '🎵';
-                        details = `${activity.details || ''} by ${activity.state || ''}`;
-                        break;
-                    case 3: // Watching
-                        icon = '👀';
-                        details = activity.details || 'Watching';
-                        break;
-                    case 4: // Custom
-                        icon = '💬';
-                        details = activity.state || 'Custom status';
-                        break;
-                    case 5: // Competing
-                        icon = '🏆';
-                        details = activity.details || 'Competing';
-                        break;
+                    case 0: icon = '🎮'; details = activity.details || 'Playing'; break;
+                    case 1: icon = '📺'; details = `Streaming ${activity.details || ''}`; break;
+                    case 3: icon = '👀'; details = activity.details || 'Watching'; break;
+                    case 4: icon = '💬'; details = activity.state || 'Custom status'; break;
+                    case 5: icon = '🏆'; details = activity.details || 'Competing'; break;
+                    default: icon = '📱'; details = 'Unknown activity'; break;
                 }
+                
+                // Get activity artwork if available
+                const activityArt = activity.assets?.large_image || activity.assets?.small_image;
+                const activityIcon = activityArt ? 
+                    `<img src="https://cdn.discordapp.com/app-assets/${activity.application_id}/${activityArt}.png" alt="${title}" style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">` : 
+                    icon;
                 
                 activitiesHTML += `
                     <div class="activity-item">
-                        <div class="activity-time">${new Date().toLocaleTimeString()}</div>
+                        <div class="activity-icon">
+                            ${activityIcon}
+                        </div>
                         <div class="activity-content">
                             <h4>${title}</h4>
                             <p>${details}</p>
                         </div>
+                        <div class="activity-time">${new Date().toLocaleTimeString()}</div>
                     </div>
                 `;
             });
@@ -404,25 +843,22 @@
             container.innerHTML = activitiesHTML;
         }
 
-        async function fetchData() {
+        async function fetchDiscordData() {
             try {
                 const response = await fetch(LANYARD_API);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.success) {
-                        updateStatus(data);
+                        updateDiscordStatus(data);
                     }
                 }
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching Discord data:', error);
             }
         }
 
-        // Update every second
-        setInterval(fetchData, 1000);
-        
-        // Initial fetch
-        fetchData();
+        setInterval(fetchDiscordData, 1000);
+        fetchDiscordData();
     </script>
 </body>
 </html>
