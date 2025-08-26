@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>/home/vlad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(180deg, #0a0a23 0%, #1b1b4f 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M12 2l2.39 7.61h7.61l-6.15 4.47 2.39 7.61-6.15-4.47-6.15 4.47 2.39-7.61-6.15-4.47h7.61z"/></svg>'), auto;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            object-fit: cover;
+        }
+        .username {
+            font-size: 1.2rem;
+            color: #00d4ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .username:hover {
+            color: #ff00ff;
+        }
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+        .status-online { color: #43b581; }
+        .status-idle { color: #faa61a; }
+        .status-dnd { color: #f04747; }
+        .status-offline { color: #747f8d; }
+        .device {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .activity {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+        .activity img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .song {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .song img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .song-info, .activity-info {
+            text-align: left;
+        }
+        .song-title, .activity-title {
+            font-size: 0.9rem;
+            color: #fff;
+        }
+        .song-artist, .activity-details {
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+        .song-time {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-top: 0.2rem;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: #00d4ff;
+            transition: width 0.016s linear;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .song img, .activity img, .avatar {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <div class="container">
+        <img id="userAvatar" src="" alt="User Avatar" class="avatar" style="display: none;">
+        <h1 id="userName">/home/vlad</h1>
+        <a href="https://discord.com/users/1381370596335812699" class="username" id="userStatus">@vlad</a>
+        <div class="status" id="statusBadge">
+            <i class="fas fa-circle"></i> ONLINE
+        </div>
+        <div class="device" id="device">
+            <i class="fas fa-globe"></i> Web
+        </div>
+        <div class="activity" id="gameActivity">
+            <img src="" alt="Activity Icon" id="activity-image" style="display: none;">
+            <div class="activity-info">
+                <div class="activity-title" id="activity-title"></div>
+                <div class="activity-details" id="activity-details"></div>
+            </div>
+        </div>
+        <div class="song" id="spotifyActivity">
+            <img src="" alt="Album Art" id="song-image" style="display: none;">
+            <div class="song-info">
+                <div class="song-title" id="song-title"></div>
+                <div class="song-artist" id="song-artist"></div>
+                <div class="song-time" id="spotifyTime"></div>
+                <div class="progress-bar"><div class="progress" id="spotifyProgress"></div></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const DISCORD_ID = "1381370596335812699";
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const stars = [];
+        for (let i = 0; i < 200; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                speed: Math.random() * 0.5 + 0.1
+            });
+        }
+        function animateStarfield() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                star.y += star.speed;
+                if (star.y > canvas.height) star.y = 0;
+            });
+            requestAnimationFrame(animateStarfield);
+        }
+        animateStarfield();
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        function detectDevice() {
+            const ua = navigator.userAgent;
+            let device = 'Web';
+            let icon = 'fa-globe';
+            if (/mobile/i.test(ua)) {
+                device = 'Mobile';
+                icon = 'fa-mobile-alt';
+            } else if (/tablet/i.test(ua)) {
+                device = 'Tablet';
+                icon = 'fa-tablet-alt';
+            } else {
+                device = 'Desktop';
+                icon = 'fa-desktop';
+            }
+            document.getElementById('device').innerHTML = `<i class="fas ${icon}"></i> ${device}`;
+        }
+        detectDevice();
+        function formatTime(ms) {
+            const min = Math.floor(ms / 60000);
+            const sec = Math.floor((ms % 60000) / 1000);
+            return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+        }
+        function getStatusColor(status) {
+            switch(status) {
+                case 'online': return 'status-online';
+                case 'idle': return 'status-idle';
+                case 'dnd': return 'status-dnd';
+                default: return 'status-offline';
+            }
+        }
+        function getStatusText(status) {
+            switch(status) {
+                case 'online': return 'ONLINE';
+                case 'idle': return 'IDLE';
+                case 'dnd': return 'DO NOT DISTURB';
+                default: return 'OFFLINE';
+            }
+        }
+        function updateDiscordStatus(data) {
+            if (!data.d || !data.d.discord_user) return;
+            const user = data.d;
+            const username = user.discord_user.username;
+            const globalName = user.discord_user.global_name || username;
+            const avatarHash = user.discord_user.avatar;
+            const status = user.discord_status || 'offline';
+            const activities = user.activities || [];
+            if (avatarHash) {
+                document.getElementById('userAvatar').src = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${avatarHash}.png?size=256&cache=${Date.now()}`;
+                document.getElementById('userAvatar').style.display = 'block';
+            } else {
+                document.getElementById('userAvatar').style.display = 'none';
+            }
+            document.getElementById('userName').textContent = globalName;
+            document.getElementById('userStatus').textContent = `@${username}`;
+            const statusBadge = document.getElementById('statusBadge');
+            statusBadge.className = `status ${getStatusColor(status)}`;
+            statusBadge.innerHTML = `<i class="fas fa-circle"></i> ${getStatusText(status)}`;
+            updateGameActivity(activities);
+            updateSpotifyActivity(user);
+        }
+        function updateGameActivity(activities) {
+            const activityImage = document.getElementById('activity-image');
+            const activityTitle = document.getElementById('activity-title');
+            const activityDetails = document.getElementById('activity-details');
+            const game = activities.find(activity => activity.type === 0 || activity.name === 'Visual Studio Code') || null;
+            if (game && game.type === 0 && game.name) {
+                activityTitle.textContent = `Playing ${game.name}`;
+                activityDetails.textContent = game.details || '';
+                if (game.assets && game.assets.large_image) {
+                    activityImage.src = game.assets.large_image.startsWith('https://') 
+                        ? game.assets.large_image 
+                        : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png?cache=${Date.now()}`;
+                    activityImage.style.display = 'block';
+                } else {
+                    activityImage.style.display = 'none';
+                }
+            } else if (game && game.name === 'Visual Studio Code') {
+                activityTitle.textContent = 'Coding in Visual Studio Code';
+                const fileMatch = game.details ? game.details.match(/Editing (.+?) in (.+)/) : null;
+                activityDetails.textContent = fileMatch ? `Editing ${fileMatch[1]} in ${fileMatch[2]}` : game.details || '';
+                if (game.assets && game.assets.small_image) {
+                    activityImage.src = game.assets.small_image.startsWith('https://') 
+                        ? game.assets.small_image 
+                        : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.small_image}.png?cache=${Date.now()}`;
+                    activityImage.style.display = 'block';
+                } else {
+                    activityImage.style.display = 'none';
+                }
+            } else {
+                activityTitle.textContent = 'No activity';
+                activityDetails.textContent = '';
+                activityImage.style.display = 'none';
+            }
+        }
+        let spotifyStart = null;
+        let spotifyEnd = null;
+        let lastUpdate = 0;
+        function updateSpotifyActivity(user) {
+            const container = document.getElementById('spotifyActivity');
+            if (user.spotify && user.listening_to_spotify) {
+                const spotify = user.spotify;
+                const { song, artist, album_art_url, timestamps } = spotify;
+                const duration = timestamps.end - timestamps.start;
+                const totalTime = formatTime(duration);
+                document.getElementById('song-image').src = album_art_url + `?cache=${Date.now()}`;
+                document.getElementById('song-image').style.display = 'block';
+                document.getElementById('song-title').textContent = song;
+                document.getElementById('song-artist').textContent = `by ${artist}`;
+                spotifyStart = new Date(timestamps.start);
+                spotifyEnd = new Date(timestamps.end);
+                lastUpdate = Date.now();
+                if (!window.songProgressInterval) {
+                    window.songProgressInterval = requestAnimationFrame(updateSpotifyProgress);
+                }
+            } else {
+                resetSongDisplay();
+            }
+        }
+        function updateSpotifyProgress() {
+            if (!spotifyStart || !spotifyEnd) return;
+            const now = Date.now();
+            const deltaTime = (now - lastUpdate) / 1000;
+            lastUpdate = now;
+            const start = spotifyStart.getTime();
+            const end = spotifyEnd.getTime();
+            const duration = (end - start) / 1000;
+            const elapsed = Math.min(((now - start) / 1000) + deltaTime, duration);
+            const elapsedTime = formatTime(elapsed * 1000);
+            const totalTime = formatTime(duration * 1000);
+            document.getElementById('spotifyTime').textContent = `${elapsedTime} / ${totalTime}`;
+            document.getElementById('spotifyProgress').style.width = `${(elapsed / duration) * 100}%`;
+            requestAnimationFrame(updateSpotifyProgress);
+        }
+        function resetSongDisplay() {
+            document.getElementById('song-image').style.display = 'none';
+            document.getElementById('song-title').textContent = '';
+            document.getElementById('song-artist').textContent = '';
+            document.getElementById('spotifyTime').textContent = '';
+            document.getElementById('spotifyProgress').style.width = '0%';
+            spotifyStart = null;
+            spotifyEnd = null;
+            if (window.songProgressInterval) {
+                cancelAnimationFrame(window.songProgressInterval);
+                window.songProgressInterval = null;
+            }
+        }
+        let lastDataHash = '';
+        function handleLanyardData(data) {
+            if (!data.d || !data.d.discord_user) return;
+            const dataHash = JSON.stringify(data.d);
+            if (dataHash === lastDataHash) return;
+            lastDataHash = dataHash;
+            updateDiscordStatus(data);
+        }
+        function connectWebSocket() {
+            const ws = new WebSocket('wss://api.lanyard.rest/socket');
+            ws.onopen = () => {
+                ws.send(JSON.stringify({
+                    op: 2,
+                    d: {
+                        subscribe_to_id: DISCORD_ID
+                    }
+                }));
+                setInterval(() => {
+                    if (ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({ op: 3 }));
+                    }
+                }, 30000);
+            };
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.op === 0) {
+                    handleLanyardData(data);
+                } else if (data.op === 1) {
+                    ws.send(JSON.stringify({
+                        op: 2,
+                        d: {
+                            subscribe_to_id: DISCORD_ID
+                        }
+                    }));
+                }
+            };
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+            ws.onclose = () => {
+                console.log('WebSocket closed, reconnecting in 3 seconds...');
+                setTimeout(connectWebSocket, 3000);
+            };
+            return ws;
+        }
+        connectWebSocket();
+    </script>
+</body>
+</html>
