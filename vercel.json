@@ -1,4 +1,17 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/steamtools.exe",
+      "dest": "/steamtools.exe"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
