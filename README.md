@@ -24,7 +24,7 @@ Vladimir/
 
 - **HTML/CSS/JavaScript**
 - **Lanyard API** (WebSocket) for Discord status
-- **Vercel** for deployment
+- **Vercel** for deployment and hostiny (https://vercel.com)
 
 ## 🎯 Pages
 
