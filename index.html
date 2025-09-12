@@ -591,10 +591,10 @@
             window.open(DISCORD_PROFILE_URL, '_blank');
         });
 
-        // Poll data every 3 seconds
+        // Poll data every 1 seconds
         function startPolling() {
             fetchData();
-            setInterval(fetchData, 3000);
+            setInterval(fetchData, 1000);
         }
 
         // Initialize
