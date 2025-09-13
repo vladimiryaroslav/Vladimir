@@ -527,6 +527,7 @@
 
             // Filter activities: show all except Spotify (type 2)
             const gameActivities = activities.filter(activity => activity.type !== 2);
+            const gameActivities = activities.filter(activity => activity.type !== 4);
 
             if (gameActivities.length > 0) {
                 const gamesSection = document.createElement('section');
@@ -601,4 +602,5 @@
         startPolling();
     </script>
 </body>
+
 </html>
