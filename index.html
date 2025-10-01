@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vladimir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/a2d1809b64.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+      position: relative;
+      background: #000;
+      perspective: 1200px;
+    }
+    video#background-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: brightness(0.6) contrast(1.1);
+      opacity: 0;
+      animation: fadeInVideo 2s ease-out 0.5s forwards;
+    }
+
+    @keyframes fadeInVideo {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 30px;
+      padding: 40px 30px 60px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      color: white;
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(25px) saturate(150%);
+      -webkit-backdrop-filter: blur(25px) saturate(150%);
+      overflow: hidden;
+      z-index: 10;
+      cursor: default;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-style: preserve-3d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      opacity: 0;
+      transform: scale(0.8) translateY(50px) rotateX(15deg);
+      animation: cardEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+    }
+
+    @keyframes cardEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px) rotateX(15deg);
+      }
+      60% {
+        opacity: 0.8;
+        transform: scale(1.05) translateY(-10px) rotateX(5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotateX(0deg);
+      }
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 8px 32px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -25%;
+      left: -25%;
+      width: 150%;
+      height: 150%;
+      background: inherit;
+      border-radius: inherit;
+      filter: blur(40px);
+      transform-origin: center;
+      animation: liquidGlassDistort 6s ease-in-out infinite alternate;
+      z-index: -1;
+      opacity: 0.35;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0) 50%, 
+        rgba(255, 255, 255, 0.05) 100%);
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    @keyframes liquidGlassDistort {
+      0% {
+        transform: scale(1) rotate(0deg) translate(0, 0);
+      }
+      25% {
+        transform: scale(1.02) rotate(0.5deg) translate(5px, 3px);
+      }
+      50% {
+        transform: scale(1.05) rotate(1deg) translate(0, 6px);
+      }
+      75% {
+        transform: scale(1.02) rotate(0.5deg) translate(-4px, 2px);
+      }
+      100% {
+        transform: scale(1) rotate(0deg) translate(0, 0);
+      }
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+      transition: transform 0.3s ease;
+      
+      opacity: 0;
+      transform: scale(0.5) rotate(-180deg);
+      animation: avatarEntrance 1s ease-out 0.8s forwards;
+    }
+
+    @keyframes avatarEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-180deg);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.1) rotate(10deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUpFade 0.8s ease-out 1.2s forwards;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      opacity: 0;
+      line-height: 1.4;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    p:nth-of-type(1) { animation: slideUpFade 0.6s ease-out 1.4s forwards; }
+    p:nth-of-type(2) { animation: slideUpFade 0.6s ease-out 1.6s forwards; }
+    p:nth-of-type(3) { animation: slideUpFade 0.6s ease-out 1.8s forwards; }
+    p:nth-of-type(4) { animation: slideUpFade 0.6s ease-out 2.0s forwards; }
+    p:nth-of-type(5) { animation: slideUpFade 0.6s ease-out 2.2s forwards; }
+
+    @keyframes slideUpFade {
+      to {
+        opacity: 0.85;
+        transform: translateY(0);
+      }
+    }
+
+    .top-buttons {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0 40px;
+      justify-content: center;
+      width: 100%;
+      transition: transform 0.3s ease;
+      
+      opacity: 0;
+      transform: scale(0.8) translateY(30px);
+      animation: buttonsEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 2.4s forwards;
+    }
+
+    @keyframes buttonsEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .button {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 30px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      user-select: none;
+    }
+    .button i {
+      font-size: 1.2rem;
+    }
+    .button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .bottom-buttons {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      z-index: 20;
+      width: auto;
+      transition: transform 0.3s ease;
+
+      opacity: 0;
+      transform: translateX(-50%) translateY(50px);
+      animation: bottomButtonsEntrance 1s ease-out 2.8s forwards;
+    }
+
+    @keyframes bottomButtonsEntrance {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .btn-link {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+
+      transform: scale(0) rotate(180deg);
+    }
+
+    .btn-link:nth-child(1) { animation: btnScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 3.0s forwards; }
+    .btn-link:nth-child(2) { animation: btnScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 3.1s forwards; }
+    .btn-link:nth-child(3) { animation: btnScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 3.2s forwards; }
+    .btn-link:nth-child(4) { animation: btnScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 3.3s forwards; }
+
+    @keyframes btnScale {
+      0% {
+        transform: scale(0) rotate(180deg);
+      }
+      70% {
+        transform: scale(1.2) rotate(-10deg);
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .btn-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .btn-link img {
+      width: 28px;
+      height: 28px;
+      border-radius: 0;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.5));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .floating-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.8;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 30px 20px 50px;
+        max-width: 350px;
+      }
+      
+      .top-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .button {
+        padding: 12px 24px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop playsinline id="background-video" preload="auto" src="https://files.catbox.moe/95gsd3.mp4"></video>
+
+  <div class="card" role="region" aria-label="Profil Enoticx">
+    <div class="floating-particles"></div>
+    <div class="card-content">
+      <img class="avatar" src="https://cdn.discordapp.com/avatars/1381370596335812699/df9b6eed72b7fd7378ef2d089ebbc827?size=1024" alt="Avtar Enoticx" />
+      <h1>Vlad</h1>
+      <p>Hello, I'm vladimir and I enjoy coding and support my local football team.</p>
+      <p>Intermediate in ragebaiting mackems.</p>
+      <p>Python, html, css and JavaScript.</p>
+      <p>Living in England</p>
+      <p>Speak English & Russian.</p>
+
+      <div class="top-buttons" aria-label="Boutons Elite Design et EnoShop">
+        <a href="https://discord.gg/GkmWEvNPMr" target="_blank" rel="noopener noreferrer" class="button"><i class="fa-brands fa-discord"></i>Eclipse RSL</a>
+      </div>
+    </div>
+
+    <div class="bottom-buttons" aria-label="Liens importants">
+      <a href="https://github.com/vladimiryaroslav" target="_blank" rel="noopener noreferrer" class="btn-link" aria-label="GitHub">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub logo" />
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const card = document.querySelector('.card');
+    const cardContent = document.querySelector('.card-content');
+    const avatar = document.querySelector('.avatar');
+    const title = document.querySelector('h1');
+    const topButtons = document.querySelector('.top-buttons');
+    const bottomButtons = document.querySelector('.bottom-buttons');
+    const floatingParticles = document.querySelector('.floating-particles');
+    
+    let isMouseTracking = false;
+    let mouseX = 0;
+    let mouseY = 0;
+    let cardX = 0;
+    let cardY = 0;
+    let rotateX = 0;
+    let rotateY = 0;
+
+    function createParticles() {
+      for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        floatingParticles.appendChild(particle);
+      }
+    }
+
+    function animate() {
+      if (isMouseTracking) {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const deltaX = mouseX - centerX;
+        const deltaY = mouseY - centerY;
+
+        const targetRotateX = -(deltaY / window.innerHeight) * 25;
+        const targetRotateY = (deltaX / window.innerWidth) * 25;
+
+        rotateX += (targetRotateX - rotateX) * 0.1;
+        rotateY += (targetRotateY - rotateY) * 0.1;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+
+        const parallaxStrength = 0.3;
+        avatar.style.transform = `translateZ(20px) translateX(${rotateY * parallaxStrength}px) translateY(${rotateX * parallaxStrength}px)`;
+        title.style.transform = `translateZ(15px) translateX(${rotateY * parallaxStrength * 0.7}px) translateY(${rotateX * parallaxStrength * 0.7}px)`;
+        topButtons.style.transform = `translateZ(10px) translateX(${rotateY * parallaxStrength * 0.5}px) translateY(${rotateX * parallaxStrength * 0.5}px)`;
+        bottomButtons.style.transform = `translateX(-50%) translateZ(5px) translateX(${rotateY * parallaxStrength * 0.3}px) translateY(${rotateX * parallaxStrength * 0.3}px)`;
+      }
+      
+      requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      isMouseTracking = true;
+    });
+    
+    document.addEventListener('mouseleave', () => {
+      isMouseTracking = false;
+      rotateX = 0;
+      rotateY = 0;
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+      avatar.style.transform = 'translateZ(0)';
+      title.style.transform = 'translateZ(0)';
+      topButtons.style.transform = 'translateZ(0)';
+      bottomButtons.style.transform = 'translateX(-50%) translateZ(0)';
+    });
+    
+    card.addEventListener('click', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const ripple = document.createElement('div');
+      ripple.style.position = 'absolute';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.style.width = '0px';
+      ripple.style.height = '0px';
+      ripple.style.borderRadius = '50%';
+      ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+      ripple.style.transform = 'translate(-50%, -50%)';
+      ripple.style.pointerEvents = 'none';
+      ripple.style.zIndex = '100';
+      
+      card.appendChild(ripple);
+      
+      ripple.animate([
+        { width: '0px', height: '0px', opacity: 0.8 },
+        { width: '300px', height: '300px', opacity: 0 }
+      ], {
+        duration: 600,
+        easing: 'ease-out'
+      }).onfinish = () => {
+        ripple.remove();
+      };
+    });
+    
+    createParticles();
+    animate();
+  </script>
+</body>
+</html>
