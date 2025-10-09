@@ -1,9 +1,3 @@
-## 🌟 Features
-
-- **Live Discord presence** via Lanyard WebSocket
-- **Animated UI**: starfield background, status badges, song progress
-- **Custom 404** with particles, floating icons, easter eggs, and a Home button
-
 ## 🚀 Live Demo
 
 Visit the live site: [vladweb.xyz](https://vladweb.xyz)
