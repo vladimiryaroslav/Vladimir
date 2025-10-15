@@ -16,7 +16,7 @@ Vladimir/
 
 - **HTML/CSS/JavaScript**
 - **Vercel** for deployment and hostiny (https://vercel.com)
-- **Cloudflare** for securit (https://cloudflare.com)
+- **Cloudflare** for security (https://cloudflare.com)
 
 ## 🎯 Pages
 
