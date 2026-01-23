@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* New Color Scheme */
+  --bg: #0b0f1a;
+  --panel: rgba(17, 24, 39, 0.92);
+  --panel-strong: rgba(12, 17, 28, 0.95);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --accent: #9f7aea;
+  --accent-soft: rgba(159, 122, 234, 0.18);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+
+  /* Legacy variable mappings for compatibility */
+  --bg-primary: var(--bg);
+  --bg-secondary: var(--panel);
+  --bg-tertiary: var(--panel-strong);
+  --text-primary: var(--text);
+  --text-secondary: var(--muted);
+  --accent-primary: var(--accent);
+  --accent-secondary: #7c3aed;
+  --accent-gradient: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+  --glass-bg: var(--panel);
+  --glass-border: var(--border);
+  --shadow-glow: 0 0 20px rgba(159, 122, 234, 0.3);
+}
+
+[data-theme="light"] {
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a5568;
+  --accent-primary: #007bff;
+  --accent-secondary: #6f42c1;
+  --accent-gradient: linear-gradient(135deg, #007bff 0%, #6f42c1 100%);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(0, 123, 255, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+code {
+  font-family: 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-gradient);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+

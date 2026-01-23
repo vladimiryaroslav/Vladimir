@@ -1,0 +1,208 @@
+.not-found-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.not-found-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+.not-found-illustration {
+  position: relative;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.error-number {
+  font-size: clamp(100px, 20vw, 200px);
+  font-weight: 900;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+  position: relative;
+}
+
+.error-icon {
+  font-size: clamp(60px, 12vw, 120px);
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.not-found-title {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.not-found-message {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.not-found-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.not-found-button-primary {
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+.not-found-button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+}
+
+.not-found-button-secondary {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
+
+.not-found-button-secondary:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+}
+
+.not-found-links {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.links-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.links-container {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 25px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .not-found-illustration {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .error-number {
+    font-size: clamp(80px, 25vw, 150px);
+  }
+
+  .error-icon {
+    font-size: clamp(40px, 15vw, 80px);
+  }
+
+  .not-found-title {
+    margin-bottom: 15px;
+  }
+
+  .not-found-message {
+    margin-bottom: 30px;
+  }
+
+  .not-found-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .not-found-button {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .links-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quick-link {
+    justify-content: center;
+  }
+}
+

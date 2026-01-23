@@ -1,0 +1,53 @@
+.particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg);
+}
+
+/* Responsive adjustments for different devices */
+@media (max-width: 1024px) {
+  .particles-canvas {
+    /* Tablet optimization */
+  }
+}
+
+@media (max-width: 768px) {
+  .particles-canvas {
+    /* Mobile optimization - particle count is already handled in JS */
+  }
+}
+
+@media (max-width: 480px) {
+  .particles-canvas {
+    /* Small mobile screens */
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .particles-canvas {
+    /* Optimize for retina displays */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .particles-canvas {
+    /* Landscape mobile optimization */
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1920px) {
+  .particles-canvas {
+    /* Large screen optimization */
+  }
+}
+
