@@ -32,14 +32,16 @@ const NotFound = () => {
         transition={{ duration: 0.6 }}
       >
         <motion.div
-          className="not-found-illustration"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-        >
-          <div className="error-number">404</div>
-          <div className="error-icon">❄️</div>
-        </motion.div>
+          className="error-container"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+      >
+        <div className="error-icon">
+        <i className="fas fa-triangle-exclamation"></i>
+      </div>
+      <div className="error-number">404</div>
+</motion.div>
 
         <motion.h1
           className="not-found-title"
